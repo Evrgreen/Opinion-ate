@@ -1,71 +1,73 @@
 {
-  "name": "opinion-ate",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "cypress": "cypress open",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint src"
-  },
-  "prettier": {
-    "arrowParens": "avoid",
-    "bracketSpacing": false,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "tabWidth": 2
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier",
-      "cypress"
-    ],
-    "env": {
-      "cypress/globals": true
+    "name": "opinion-ate",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@testing-library/jest-dom": "^5.14.1",
+        "@testing-library/react": "^13.0.0",
+        "@testing-library/user-event": "^13.2.1",
+        "react": "^18.1.0",
+        "react-dom": "^18.1.0",
+        "react-scripts": "5.0.1",
+        "web-vitals": "^2.1.0"
     },
-    "rules": {
-      "prettier/prettier": [
-        "warn",
-        {
-          "endOfLine": "auto"
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "ci": "react-scripts build",
+        "cypress": "cypress open",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "lint": "eslint src"
+    },
+    "prettier": {
+        "arrowParens": "avoid",
+        "bracketSpacing": false,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "tabWidth": 4
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest",
+            "prettier"
+        ],
+        "plugins": [
+            "prettier",
+            "cypress"
+        ],
+        "env": {
+            "cypress/globals": true
+        },
+        "rules": {
+            "prettier/prettier": [
+                "warn",
+                {
+                    "endOfLine": "auto",
+                    "tabWidth": 4
+                }
+            ]
         }
-      ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@types/cypress": "^1.1.3",
+        "cypress": "^10.0.3",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-cypress": "^2.12.1",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "^2.6.2"
     }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@types/cypress": "^1.1.3",
-    "cypress": "^10.0.3",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-cypress": "^2.12.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.6.2"
-  }
 }
