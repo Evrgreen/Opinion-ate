@@ -1,4 +1,16 @@
-# Getting Started with Create React App
+
+
+#Yumrank 
+
+A site for tracking reviews of dishes at different restaurants.App
+
+Production deploy: <https://yumrank.netlify.app/>
+
+
+Install dependencies 
+
+### `yarn install` 
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
