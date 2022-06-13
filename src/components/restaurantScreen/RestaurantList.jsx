@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
+import {getRestaurantsSelector, loadRestaurants} from './restaurantSlice';
 
-export function RestaurantList({loadRestaurants, restaurants}) {
+export function RestaurantList({getRestuarants, restaurants}) {
     React.useEffect(() => {
-        loadRestaurants();
-    }, [loadRestaurants]);
+        getRestuarants();
+    }, [getRestuarants]);
     if (!restaurants.length) {
         return null;
     }
@@ -23,6 +23,16 @@ export function RestaurantList({loadRestaurants, restaurants}) {
 RestaurantList.propTypes = {};
 
 export default function WithRedux() {
-    const restaurants = useSelector(state => state.restaurants);
-    return <RestaurantList restaurants={restaurants} />;
+    const restaurants = useSelector(getRestaurantsSelector);
+    const dispatch = useDispatch();
+    const loadRestaurantsWithDispath = React.useCallback(
+        () => dispatch(loadRestaurants()),
+        [dispatch],
+    );
+    return (
+        <RestaurantList
+            restaurants={restaurants}
+            getRestuarants={loadRestaurantsWithDispath}
+        />
+    );
 }
