@@ -2,6 +2,10 @@ import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getRestaurantsSelector, loadRestaurants} from './restaurantSlice';
 
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+
 export function RestaurantList({getRestuarants, restaurants}) {
     React.useEffect(() => {
         getRestuarants();
@@ -11,11 +15,13 @@ export function RestaurantList({getRestuarants, restaurants}) {
     }
     return (
         <>
-            <ul>
+            <List>
                 {restaurants.map(restaurant => (
-                    <li key={restaurant.id}>{restaurant.name}</li>
+                    <ListItem key={restaurant.id}>
+                        <ListItemText>{restaurant.name}</ListItemText>
+                    </ListItem>
                 ))}
-            </ul>
+            </List>
         </>
     );
 }
