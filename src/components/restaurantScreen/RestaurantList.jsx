@@ -5,8 +5,8 @@ import {getRestaurantsSelector, loadRestaurants} from './restaurantSlice';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-
-export function RestaurantList({getRestuarants, restaurants}) {
+import CircularProgress from '@mui/material/CircularProgress';
+export function RestaurantList({getRestuarants, restaurants, isLoading}) {
     React.useEffect(() => {
         getRestuarants();
     }, [getRestuarants]);
@@ -15,6 +15,7 @@ export function RestaurantList({getRestuarants, restaurants}) {
     }
     return (
         <>
+            {isLoading && <CircularProgress />}
             <List>
                 {restaurants.map(restaurant => (
                     <ListItem key={restaurant.id}>

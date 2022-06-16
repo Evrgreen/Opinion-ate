@@ -2,13 +2,12 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
     allRestaurants: [],
+    isLoading: false,
 };
 export const loadRestaurants = createAsyncThunk(
     'restaurants/loadRestaurants',
     async (_, thunkAPI) => {
-        console.log('in loadRestaurant thunk');
         const records = await thunkAPI.extra.loadRestaurants();
-        console.table(records);
         return records;
     },
 );
@@ -22,8 +21,13 @@ export const restaurantsSlice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(loadRestaurants.fulfilled, (state, action) => {
+            console.log({action});
             const records = action.payload;
             state.allRestaurants = records;
+            state.isLoading = false;
+        });
+        builder.addCase(loadRestaurants.pending, (state, action) => {
+            state.isLoading = true;
         });
     },
 });

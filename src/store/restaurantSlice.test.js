@@ -2,34 +2,51 @@ import restaurantReducer, {
     loadRestaurants,
 } from '../components/restaurantScreen/restaurantSlice';
 import {configureStore} from '@reduxjs/toolkit';
+let store;
+const sushiPlace = 'sushi place';
+const pizzaPlace = 'pizza place';
+const records = [
+    {id: 1, name: sushiPlace},
+    {id: 2, name: pizzaPlace},
+];
 
+const setupStore = async (customConfig = {}) => {
+    const api = {
+        loadRestaurants: customConfig.api
+            ? customConfig.api
+            : () => Promise.resolve(records),
+    };
+
+    const config = {
+        reducer: restaurantReducer,
+        middleware: getDefaultMiddleware =>
+            getDefaultMiddleware({thunk: {extraArgument: api}}),
+    };
+    store = configureStore(config);
+    await store.dispatch(loadRestaurants());
+};
+
+///tests
 describe('restuarantReducer', () => {
-    const sushiPlace = 'sushi place';
-    const pizzaPlace = 'pizza place';
-
     describe('loadRestaurants action', () => {
-        it('stores the restaurants', async () => {
-            const records = [
-                {id: 1, name: sushiPlace},
-                {id: 2, name: pizzaPlace},
-            ];
-            const api = {
-                loadRestaurants: () => {
-                    console.log('loading....');
-                    return Promise.resolve(records);
-                },
-            };
-
-            const store = configureStore({
-                reducer: restaurantReducer,
-                middleware: getDefaultMiddleware =>
-                    getDefaultMiddleware({thunk: {extraArgument: api}}),
+        describe('When loading is successful', () => {
+            beforeEach(() => {
+                setupStore();
             });
-            console.table(store);
-
-            await store.dispatch(loadRestaurants());
-
-            expect(store.getState().allRestaurants).toEqual(records);
+            it('sets the isLoading flag to false in state', () => {
+                expect(store.getState().isLoading).toEqual(false);
+            });
+            it('stores the restaurants', () => {
+                expect(store.getState().allRestaurants).toEqual(records);
+            });
+            describe('While loading data', () => {
+                beforeEach(() => {
+                    setupStore({api: () => new Promise(() => {})});
+                });
+                it('sets the isLoading flage to true in state', () => {
+                    expect(store.getState().isLoading).toEqual(true);
+                });
+            });
         });
     });
 });
