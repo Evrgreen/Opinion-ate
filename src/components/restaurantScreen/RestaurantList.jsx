@@ -1,12 +1,24 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {getRestaurantsSelector, loadRestaurants} from './restaurantSlice';
+import {
+    getErrorSelector,
+    getisLoadingSelector,
+    getRestaurantsSelector,
+    loadRestaurants,
+} from './restaurantSlice';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
 
-export function RestaurantList({getRestuarants, restaurants}) {
+export function RestaurantList({
+    getRestuarants,
+    restaurants,
+    isLoading,
+    loadingError,
+}) {
     React.useEffect(() => {
         getRestuarants();
     }, [getRestuarants]);
@@ -15,6 +27,12 @@ export function RestaurantList({getRestuarants, restaurants}) {
     }
     return (
         <>
+            {loadingError && (
+                <Alert severity="error">
+                    There was an error loading resaurants
+                </Alert>
+            )}
+            {isLoading && <CircularProgress />}
             <List>
                 {restaurants.map(restaurant => (
                     <ListItem key={restaurant.id}>
@@ -30,6 +48,8 @@ RestaurantList.propTypes = {};
 
 export default function WithRedux() {
     const restaurants = useSelector(getRestaurantsSelector);
+    const isLoading = useSelector(getisLoadingSelector);
+    const loadingError = useSelector(getErrorSelector);
     const dispatch = useDispatch();
     const loadRestaurantsWithDispath = React.useCallback(
         () => dispatch(loadRestaurants()),
@@ -39,6 +59,8 @@ export default function WithRedux() {
         <RestaurantList
             restaurants={restaurants}
             getRestuarants={loadRestaurantsWithDispath}
+            isLoading={isLoading}
+            loadingError={loadingError}
         />
     );
 }
