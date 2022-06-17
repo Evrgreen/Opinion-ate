@@ -21,17 +21,28 @@ describe('RestaurantList', () => {
             />,
         );
     };
+    describe('On initial render', () => {
+        it('fetches restaurants', () => {
+            renderComponent();
+            expect(loadRestaurants).toHaveBeenCalledTimes(1);
+        });
+        it("shouldn't show an error message", () => {
+            renderComponent();
+            expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+        });
+
+        it("shouldn't show a loading spinner", () => {
+            renderComponent();
+            expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+        });
+    });
     describe('While loading data', () => {
         it('shows a loading spinner to user', () => {
             renderComponent({isLoading: true});
             expect(screen.getByRole('progressbar')).toBeInTheDocument();
         });
     });
-    it('loads restaurants on first renderkid', () => {
-        renderComponent();
-        expect(loadRestaurants).toHaveBeenCalledTimes(1);
-    });
-    describe('When loading completeds', () => {
+    describe('When loading completes', () => {
         it('shows the names of restuarants on the page', () => {
             renderComponent();
             expect(screen.getByText(pizzaPlace)).toBeInTheDocument();
@@ -41,6 +52,16 @@ describe('RestaurantList', () => {
         it("doesn't display a loading spinner", () => {
             renderComponent();
             expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+        });
+        it("doesn't display an error message", () => {
+            renderComponent();
+            expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+        });
+    });
+    describe('When there is an Error in loading', () => {
+        it('displays an error message to users', () => {
+            renderComponent({loadingError: true});
+            expect(screen.getByRole('alert')).toBeInTheDocument();
         });
     });
 });
